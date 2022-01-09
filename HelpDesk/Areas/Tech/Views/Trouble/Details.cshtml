@@ -1,0 +1,274 @@
+﻿@model HelpDesk.Areas.Tech.Models.DetailTechMV
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Tech/Views/Shared/_LayoutTrouble.cshtml";
+}
+
+<style>
+    .form-group img {
+        height: 250px;
+        max-width: 900px;
+    }
+    .myBtn {
+        padding: 10px;
+        margin: 10px;
+        width: 120px        
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id_Trouble)
+        @Html.HiddenFor(model => model.id_DetailTech)
+        <fieldset style="background-color: lightgray; margin-bottom:20px">
+            <legend style="background-color: lightgray; padding-left:10px; font-weight: bold">@StaticResource.Resource.detailTrouble</legend>
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.nameReport, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.id_Report)
+                    @Html.TextBox(@StaticResource.Resource.nameReport, ViewData["Report"], new { htmlAttributes = new { @class = "form-control" }, @readonly = true })
+                    @Html.ValidationMessageFor(model => model.id_Report, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.nameFill, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.id_Fill)
+                    @Html.TextBox("Fill", ViewData["Fill"], new { htmlAttributes = new { @class = "form-control" }, @readonly = true })
+                    @Html.ValidationMessageFor(model => model.id_Fill, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.nameManage, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.id_Manage)
+                    @Html.TextBox("manage", ViewData["Manage"], new { htmlAttributes = new { @class = "form-control" }, @readonly = true })
+                    @Html.ValidationMessageFor(model => model.id_Manage, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.id_device, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.id_Device, new { htmlAttributes = new { @class = "form-control" }, @readonly = true })
+                    @Html.ValidationMessageFor(model => model.id_Device, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.describe, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.describe, 7, 50, new { htmlAttributes = new { @class = "form-control" }, @readonly = true })
+                    @Html.ValidationMessageFor(model => model.describe, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.image, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @if (!string.IsNullOrEmpty(Model.images))
+                    {
+                        <img src="@Url.Content(Model.images)" alt=@StaticResource.Resource.image />
+                    }
+                    else
+                    {
+                        @Html.Label(@StaticResource.Resource.image, @StaticResource.Resource.image, new { htmlAttributes = new { @class = "form-control" }, @readonly = true })
+                    }
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.status, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.status, new List<SelectListItem>()
+                        {
+                            new SelectListItem(){ Selected = true, Text = @StaticResource.Resource.statusSend, Value = "0" },
+                            new SelectListItem(){ Selected = false, Text = @StaticResource.Resource.statusRecevied, Value = "1" },
+                            new SelectListItem(){ Selected = false, Text = @StaticResource.Resource.statusProcess, Value = "2" },
+                            new SelectListItem(){ Selected = false, Text = @StaticResource.Resource.statusFinish, Value = "3" },
+                            new SelectListItem(){ Selected = false, Text = @StaticResource.Resource.statusFinish, Value = "4" }
+
+                        },
+                        new { htmlAttributes = new { @class = "form-control" }, disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.level, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.level, new List<SelectListItem>()
+                            {
+                                new SelectListItem(){ Selected = true, Text = @StaticResource.Resource.levelLess, Value = "0" },
+                                new SelectListItem(){ Selected = false, Text = @StaticResource.Resource.levelSerious, Value = "1" },
+                                new SelectListItem(){ Selected = false, Text = @StaticResource.Resource.levelVery, Value = "2" }
+
+                            },
+                            new { htmlAttributes = new { @class = "form-control" }, disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.dateStaff, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.dateStaff, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                    @Html.ValidationMessageFor(model => model.dateStaff, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.dateManage, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.dateManage, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                    @Html.ValidationMessageFor(model => model.dateManage, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.dateTech, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.dateTech, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                    @Html.ValidationMessageFor(model => model.dateTech, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            
+        </fieldset>
+
+        <fieldset style="text-decoration: none; background-color: burlywood; margin-bottom: 20px">
+            <legend style="font-size: 18px; background-color:burlywood ; padding-left:10px; font-weight: bold">@StaticResource.Resource.technician</legend>
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.nameTech, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.id_Tech)
+                    @Html.TextBox("Tech", ViewData["Tech"], new { htmlAttributes = new { @class = "form-control" }, @readonly = "true" })
+                    @Html.ValidationMessageFor(model => model.id_Tech, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.status, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.statusTech, new List<SelectListItem>()
+                        {
+                            new SelectListItem(){ Selected = true, Text = @StaticResource.Resource.statusSend, Value = "0" },
+                            new SelectListItem(){ Selected = false, Text = @StaticResource.Resource.statusTroubleshooting, Value = "1" },
+                            new SelectListItem(){ Selected = false, Text = @StaticResource.Resource.statusSendBack, Value = "2" },
+                            new SelectListItem(){ Selected = false, Text = @StaticResource.Resource.statusFinish, Value = "3" }
+
+                        },
+                        new { htmlAttributes = new { @class = "form-control" }, disabled = "disabled" })
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.describeTech, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.describeTech, 7, 50, new { htmlAttributes = new { @class = "form-control" }, @readonly = "true" })
+                    @Html.ValidationMessageFor(model => model.describeTech, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.fixMethod, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.RadioButtonFor(model => model.fixMethod, "0", new { htmlAttributes = new { @class = "form-control" }, onclick = "fixMethodClick(this)", @id = "rad0" })@Html.Label(@StaticResource.Resource.troubleShooting) &nbsp; &nbsp;
+                    @Html.RadioButtonFor(model => model.fixMethod, "1", new { htmlAttributes = new { @class = "form-control" }, onclick = "fixMethodClick(this)", @id = "rad1" })@Html.Label(@StaticResource.Resource.replaceHardware)&nbsp; &nbsp;
+                    @*<p>@Html.RadioButtonFor(model => model.fixMethod, "0")Fix  P</p>
+                <p>@Html.RadioButtonFor(model => model.fixMethod, "1")New</p>*@
+                    @Html.ValidationMessageFor(model => model.fixMethod, "", new { @class = "text-danger", @id = "vlFix" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.id_Bill, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.id_Bill, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                    @Html.ValidationMessageFor(model => model.id_Bill, "", new { @class = "text-danger", @id = "ErrIdBill" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.billContent, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.contentBill, 7, 50, new { htmlAttributes = new { @class = "form-control" }, @readonly = true })
+                    @Html.ValidationMessageFor(model => model.contentBill, "", new { @class = "text-danger", @id = "ErrContent" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.deadline, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.deadline, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                    @Html.ValidationMessageFor(model => model.deadline, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.dateFinish, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.dateFinish, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                    @Html.ValidationMessageFor(model => model.dateFinish, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(@StaticResource.Resource.idFAQ, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.id_FAQ, new { htmlAttributes = new { @class = "form-control" }, @readonly = "true" })
+                    @if (Model.id_FAQ > 0)
+                    {
+                        @Html.ActionLink("Detail", "Detail", "FAQ", new { area = "", id = Model.id_FAQ }, null)
+                    }
+
+                    @Html.ValidationMessageFor(model => model.id_FAQ, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @if (Model.id_FAQ > 0)
+            {
+                <div class="form-group">
+                    @Html.LabelFor(model => model.describeFAQ, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.describeFAQ, 7, 50, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.describeFAQ, "", new { @class = "text-danger", @id = "ErrContent" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.finishTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.finishTime, new { htmlAttributes = new { @class = "form-control" }, @type = "number" })Days
+                        @Html.ValidationMessageFor(model => model.finishTime, "", new { @class = "text-danger", @id = "ErrContent" })
+                    </div>
+                </div>
+            }
+        </fieldset>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" id="btnFinish" name="Finish" value="@StaticResource.Resource.finish" onclick = "return validateForm()" class="btn btn-success myBtn" @ViewData["finish"] />
+                <input type="submit" id="btnProcess" name="Processing" value="@StaticResource.Resource.process" class="btn btn-info myBtn" @ViewData["process"]>
+                <input type="submit" id="btnSendBack" name="SendBack" value="@StaticResource.Resource.sendBack" class="btn btn-danger myBtn" @ViewData["SendBack"]>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink(@StaticResource.Resource.backToList, "Index")
+</div>
+
+@section scripts{
+    <script src="~/Scripts/DetailTech.js"></script>
+}

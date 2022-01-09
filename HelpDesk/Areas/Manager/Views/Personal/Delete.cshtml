@@ -1,0 +1,53 @@
+﻿@model Model.User
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Manager/Views/Shared/_LayoutPersonal.cshtml";
+}
+
+<h2>Delete</h2>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Account")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.username)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Full name")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Right")
+        </dt>
+
+        <dd>
+            @ViewData[Model.rightt.ToString()]
+        </dd>
+
+    </dl>
+
+    <h3>Do you really want to delete this user?</h3>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color">
+            <input type="submit" value="Yes" class="btn btn-default" />
+        </div>
+        <br />
+        <div>
+            @Html.ActionLink("Back to list", "Index")
+        </div>
+    }
+</div>

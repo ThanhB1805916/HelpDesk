@@ -1,0 +1,95 @@
+﻿@model IPagedList<Model.FAQ>
+@using PagedList.Mvc;
+@using PagedList;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Manager/Views/Shared/_LayoutTrouble.cshtml";
+}
+
+<h2>FAQ</h2>
+<br />
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">
+                @StaticResource.Resource.idFAQ
+            </th>
+            <th scope="col">
+                @StaticResource.Resource.question
+            </th>
+            <th scope="col">
+                @StaticResource.Resource.answer
+            </th>
+            <th scope="col">
+                @StaticResource.Resource.right
+            </th>
+            <th scope="col">
+                @StaticResource.Resource.count
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr id="row_@item.id_FAQ">
+                <td onclick="window.location.href='/FAQ/Detail/@item.id_FAQ'">
+                    @Html.DisplayFor(modelItem => item.id_FAQ)
+                </td>
+                <td onclick="window.location.href='/FAQ/Detail/@item.id_FAQ'">
+                    @Html.DisplayFor(modelItem => item.question)
+                </td>
+                <td onclick="window.location.href='/FAQ/Detail/@item.id_FAQ'">
+                    @Html.DisplayFor(modelItem => item.answer)
+                </td>
+                <td>
+
+                    @Ajax.ActionLink(@ViewData[item.rightt.ToString()].ToString(), "ChangeRight", new { id = item.id_FAQ }, new AjaxOptions
+               {
+                   OnComplete = "ChangeRight(this)",
+                   HttpMethod = "Post"
+               }, new { id = "right"})
+                </td>
+                <td onclick="window.location.href='/FAQ/Detail/@item.id_FAQ'">
+                    @Html.DisplayFor(modelItem => item.countt)
+                </td>
+                <td>
+                    @*<a href="/Manager/FAQ/Edit/@item.id_FAQ"><span class="fas fa-edit icon" style="padding-right:15px"></span></a>*@
+                    <a class="icon" href="FAQ/Edit/@item.id_FAQ" style="padding-right:15px">
+                        <i class="fas fa-pen"></i>
+                        <span class="tooltiptext">@StaticResource.Resource.edit</span>
+                    </a>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.id_FAQ, @class = "glyphicon glyphicon-pencil" }) |*@
+                    @Ajax.ActionLink(" ", "Delete", new { id = item.id_FAQ }, new AjaxOptions
+               {
+                   Confirm = StaticResource.Resource.deleteFAQ + " " + item.id_FAQ,
+                   OnComplete = "$('#row_" + item.id_FAQ + "').remove()",
+                   HttpMethod = "Delete"
+               }, new { @class = "icon glyphicon glyphicon-trash" /*"glyphicon glyphicon-trash"*/ })
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<div>
+    <a class="icon" href=@Url.Action("Insert", "FAQ") style="padding-right:15px">
+        <i class="fas fa-plus-square"></i>
+        <span class="tooltiptext">@StaticResource.Resource.createFAQ</span>
+    </a>
+    <a class="icon" href=@Url.Action("SuggestionFAQ", "FAQ")>
+        <i class="fas fa-folder-plus"></i>
+        <span class="tooltiptext">@StaticResource.Resource.suggestionFAQ</span>
+    </a>
+</div>
+
+@Html.PagedListPager(Model, index => Url.Action("index", "FAQ", new { index }))
+@section scripts{
+
+    <script src="~/Scripts/FAQ_Manager.js"></script>
+}

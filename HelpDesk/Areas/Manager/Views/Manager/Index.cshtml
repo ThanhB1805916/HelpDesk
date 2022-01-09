@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Manager/Views/Shared/_LayoutTrouble.cshtml";
+}
+
+<h2>Home Page Manager</h2>
+
+@Html.ActionLink("Personal", "Index", "Personal")
+<br />
+@Html.ActionLink("Troulbes List", "Index", "Trouble")
+<br />
+@Html.ActionLink("Troulbes Statistic", "Troubles_Statistic", "Trouble")

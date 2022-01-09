@@ -1,0 +1,104 @@
+﻿@*@model HelpDesk.Models.UserModel.FAQModelView*@
+@model Model.FAQ
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Manager/Views/Shared/_LayoutTrouble.cshtml";
+}
+
+<h2>@StaticResource.Resource.edit FAQ</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        
+        <p class="alert-success" id="sucess">@ViewBag.Sucess</p>
+        <hr />
+        @Html.HiddenFor(model => model.id_FAQ)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.question, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.question, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.question, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.rightt, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.rightt, new List<SelectListItem>()
+                            {
+                                new SelectListItem(){ Selected = true, Text = StaticResource.Resource._private, Value = "0" },
+                                new SelectListItem(){ Selected = false, Text = StaticResource.Resource._public, Value = "1" }
+                            }, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.rightt, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.answer, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.answer, 10, 50, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.answer, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-success" />
+                <input type="reset" value="Cancel" class="btn btn-info">
+            </div>
+        </div>
+    </div>
+}
+<strong style="font-size: large">@StaticResource.Resource.troubleRef</strong>
+<br />
+<br />
+
+
+
+<div class="col-md-offset-1" padding: 5px">
+    <table class="table table-hover" id="tableTrouble">
+        <tr>
+            <th>@StaticResource.Resource.id_trouble</th>
+            <th>@StaticResource.Resource.nameTech</th>
+            <th>@StaticResource.Resource.timeFinish</th>
+            <th>@StaticResource.Resource.describe</th>
+            <th></th>
+        </tr>
+        @for (int i = 0; i < ViewBag.detail.Count; i++)
+        {
+            <tr id="row_@i">
+                <td onclick="window.location.href='/Trouble/DetailFAQ/@ViewBag.detail[i].id_DetailTech'">@ViewBag.detail[i].id_Trouble</td>
+                <td onclick="window.location.href='/Trouble/DetailFAQ/@ViewBag.detail[i].id_DetailTech'">@ViewData["TechName_" + i]</td>
+                <td onclick="window.location.href='/Trouble/DetailFAQ/@ViewBag.detail[i].id_DetailTech'">@ViewBag.detail[i].finishTime days</td>
+                <td onclick="window.location.href='/Trouble/DetailFAQ/@ViewBag.detail[i].id_DetailTech'">@ViewBag.detail[i].describeFAQ</td>
+                <td>
+                    @Ajax.ActionLink(" ", "Remove", new { id = ViewBag.detail[i].id_DetailTech }, new AjaxOptions
+      {
+          Confirm = StaticResource.Resource.removeRef,
+          OnComplete = "$('#row_" + i + "').remove()",
+          HttpMethod = "Post"
+      }, new { @class = "icon glyphicon glyphicon-trash" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+
+<div>
+    <a class="icon" href="@Url.Action("Index", "FAQ", new { Area = "Manager"})">
+        <i class="fas fa-arrow-left"></i>
+        <span class="tooltiptext">Back</span>
+    </a>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        setTimeout(function () { $('#sucess').fadeOut(); }, 2000);
+    </script>
+}

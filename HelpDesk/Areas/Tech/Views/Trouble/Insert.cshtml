@@ -1,0 +1,82 @@
+﻿@model Model.Trouble
+
+@{
+    ViewBag.Title = "Insert";
+    Layout = "~/Areas/Tech/Views/Shared/_LayoutTrouble.cshtml";
+}
+
+@section jsFooter{
+    <script>
+        $('#btnSelectImage').on('click', function (e) {
+            e.preventDefault();
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (fileUrl) {
+                $('#txtImage').val(fileUrl);
+            };
+            finder.popup();
+        })
+    </script>
+}
+<h2>Insert</h2>
+
+<p class="label-success">@ViewBag.Success</p>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Trouble</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.id_Report, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.id_Report, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.id_Report, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.id_Device, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.id_Device, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.id_Device, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.describe, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.describe, 7, 50, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.describe, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.images, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.images, new { htmlAttributes = new { @class = "form-control" }, id = "txtImage" })
+                @*<button style="margin-left:5px" type="button" id="btnSelectImage" href="#">Select Image</button>*@
+                <a class="icon" id="btnSelectImage">
+                    <i class="fas fa-folder-open"></i>
+                    <span class="tooltiptext">Select</span>
+                </a>
+                @Html.ValidationMessageFor(model => model.images, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <a class="icon" href="@Url.Action("Index", "Trouble")">
+        <i class="fas fa-arrow-left"></i>
+        <span class="tooltiptext">Back</span>
+    </a>
+</div>

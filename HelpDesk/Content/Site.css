@@ -1,0 +1,61 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.icon {
+    color: #2d3436;
+    position: relative;
+    display: inline-block;
+    width: auto;
+}
+
+    .icon i {
+        font-size: 15px;
+        transition: 0.2s linear;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .icon:hover i {
+        transform: scale(1.2);
+        color: #2d3436;
+    }
+
+    .icon .tooltiptext {
+        position: absolute;
+        display: block;
+        white-space: nowrap;
+        visibility: hidden;
+        background-color: #2d3436;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 5px;
+        transition: 0.1s linear;
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+        bottom: 100%;
+        left: 150%;
+        margin-left: -35px;
+        margin-bottom: 5px;
+    }
+
+    .icon:hover .tooltiptext {
+        visibility: visible;
+    }
+

@@ -1,0 +1,177 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Help Desk System</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/style.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/Assets/css/all.css" rel="stylesheet" type="text/css" />
+    <link href="~/Assets/css/brands.css" rel="stylesheet" type="text/css" />
+    <link href="~/Assets/css/fontawesome.css" rel="stylesheet" type="text/css" />
+    <link href="~/Assets/css/solid.css" rel="stylesheet" type="text/css" />
+    @*<link href="~/Content/superhero.css" rel="stylesheet" type="text/css" />*@
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
+    <script defer src="~/Assets/js/all.js"></script>
+    <script defer src="~/Assets/js/brands.js"></script>
+    <script defer src="~/Assets/js/solid.js"></script>
+    <script defer src="~/Assets/js/fontawesome.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="@Url.Action("Index", "Trouble", new { area = ""})">
+            Online Help Desk
+        </a>
+        <div class="navbar-collapse collapse">
+            <ul class="navbar-nav navbar-right mr-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("ChangeCulture", "Base", new { ddlCulture = "vi", returnUrl = Request.Url.ToString() } )">
+                        <img src="~/Assets/icon/vietnam.png" style="padding-right:3px" />
+                        @StaticResource.Resource.Vietnamese
+
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("ChangeCulture", "Base", new { ddlCulture = "en", returnUrl = Request.Url.ToString() } )">
+                        <img src="~/Assets/icon/united-states.png" style="padding-right:3px" />
+                        @StaticResource.Resource.English
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="@Url.Action("Logout", "Authentication", new { area = ""})">
+                        <i class="fas fa-sign-out-alt"></i>
+                        @StaticResource.Resource.logout
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="side"></nav>
+        </div>
+    </div>
+
+    <div class="list-group" style="width: 17%; height: 100%; overflow:auto; position: fixed; background-color: #f1f1f1">
+        <a class="btnc" href=@Url.Action("Insert", "Trouble", new { Area = ""})>
+            <div class="textc">@StaticResource.Resource.newReport</div>
+        </a>
+
+        <a class="list-group-item list-group-item-action icon" href="/Manager/Trouble">
+            <i class="fas fa-tasks"></i>
+            <span style="padding-left: 1px; display:inline">@StaticResource.Resource.manageTrouble</span>
+            <span id="newTrouble" class="badge" style="display:inline; background-color: #e74c3c; font-size: 12px"></span>
+        </a>
+
+        <a class="list-group-item list-group-item-action icon" href=@Url.Action("Index", "Trouble", new { Area = ""})>
+            <i class="fas fa-file-alt"></i>
+            <span style="padding-left: 1px">@StaticResource.Resource.myTrouble</span>
+        </a>
+        @*<a class="list-group-item list-group-item-action icon" href=@Url.Action("Insert", "Trouble", new { Area = ""})>
+                <i class="fas fa-file-medical"></i>
+                <span style="padding-left: 3px">Add Trouble</span>
+            </a>*@
+        <a class="list-group-item list-group-item-action icon" href=@Url.Action("Index", "Personal", new { Area = "Manager"})>
+            <i class="fas fa-users"></i>
+            <span style="padding-left: 1px">@StaticResource.Resource.manageUser</span>
+        </a>
+        <a class="list-group-item list-group-item-action icon" href=@Url.Action("Index", "FAQ", new { Area = "Manager" })>
+            <i class="fas fa-question-circle"></i>
+            <span style="padding-left: 1px">@StaticResource.Resource.faq</span>
+        </a>
+        <a class="list-group-item list-group-item-action icon" href="@Url.Action("AccountInfo", "Account", new { Area = ""})">
+            <i class="fas fa-key"></i>
+            <span style="padding-left: 3px">@StaticResource.Resource.account</span>
+        </a>
+    </div>
+
+
+    <div class="container body-content" style="margin-left: 17%; width: 83%">
+        @Html.Hidden("Get", Url.Action("Get", "Trouble", new { area = "Manager" }))
+        @RenderBody()
+        <hr />
+        <footer class="card-footer text-muted">
+            <p>&copy; @DateTime.Now.Year Online Helpdesk System</p>
+        </footer>
+    </div>
+
+
+
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Assets/ckfinder/ckfinder.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <script src='~/signalr/js'></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/SignalR.js"></script>
+    @RenderSection("jsFooter", required: false)
+    @RenderSection("scripts", required: false)
+
+
+
+
+    @*<style type="text/css">
+
+            .noti-content {
+                position: fixed;
+                right: 100px;
+                background: #e5e5e5;
+                border-radius: 4px;
+                top: 47px;
+                width: 250px;
+                display: none;
+                border: 1px solid #9E988B;
+                border: 1px solid #9E988B;
+            }
+
+            #notiContent {
+                max-height: 200px;
+                overflow: auto;
+                padding: 0px;
+                margin: 0px;
+                padding-left: 20px;
+            }
+
+            ul#notiContent li {
+                margin: 3px;
+                padding: 6px;
+                background: #fff;
+            }
+
+            .noti-top-arrow {
+                border-color: transparent;
+                border-bottom-color: #F5DW83;
+                border-style: dashed dashed solid;
+                border-width: 0 8.5px 8.5px;
+                position: absolute;
+                right: 32px;
+                top: -8px;
+            }
+
+            span.noti {
+                color: #FF2323;
+                margin: 15px;
+                position: fixed;
+                right: 100px;
+                font-size: 18px;
+                cursor: pointer;
+            }
+
+            span.count {
+                position: relative;
+                top: -3px;
+            }
+        </style>*@
+
+
+</body>
+</html>

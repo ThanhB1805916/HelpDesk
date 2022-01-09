@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Tech/Views/Shared/_LayoutTrouble.cshtml";
+}
+
+<h2>Tech Page</h2>
+
+@Html.ActionLink("Danh sách sự cố", "Index", "Trouble") <br />
+@Html.ActionLink("Thêm sự cố", "Insert", "Trouble") <br />
+@Html.ActionLink("Vào FAQ", "Index", "FAQ")

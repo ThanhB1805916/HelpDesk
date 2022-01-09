@@ -1,0 +1,52 @@
+﻿@model IPagedList<Model.FAQ>
+@using PagedList.Mvc;
+@using PagedList;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutTrouble.cshtml";
+}
+
+<h2>@StaticResource.Resource.faq</h2>
+<br />
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">
+                @StaticResource.Resource.question
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.answer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.rightt)
+                </th>*@
+            <th scope="col">
+                @StaticResource.Resource.count
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr onclick="window.location.href='/FAQ/Detail/@item.id_FAQ'">
+                <td>
+                    @Html.DisplayFor(modelItem => item.question)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.answer)
+                    </td>
+                    <td>
+                        @ViewData[item.rightt.ToString()]
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.countt)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+@Html.PagedListPager(Model, index => Url.Action("Index", "FAQ", new { index }))

@@ -1,0 +1,50 @@
+﻿@model Model.User
+
+@{
+    ViewBag.Title = StaticResource.Resource.account;
+    Layout = ViewBag.Layout;
+}
+
+<h2>@StaticResource.Resource.account</h2>
+
+
+    <div class="form-horizontal">
+        <h4>@StaticResource.Resource.userInfo</h4>
+        <a class="btn btn-info" href="/Account/ChangeUserPassword">@StaticResource.Resource.changePwd</a>
+        <hr />
+        <div class="form-group">
+            @Html.Label(@StaticResource.Resource.id_user, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.id_user, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label(StaticResource.Resource.username, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control", @readonly="true" } })
+                
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label(@StaticResource.Resource.fullName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" , @readonly="true"} })
+               
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label(@StaticResource.Resource.right, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                
+                <input class="form-control text-box single-line" id="right" name="right" type="text" value="@ViewData[Model.rightt.ToString()]" readonly />
+            </div>
+        </div>
+
+    </div>
+
+
+

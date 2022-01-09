@@ -1,0 +1,69 @@
+﻿@model Model.User
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Manager/Views/Shared/_LayoutTrouble.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h3>@StaticResource.Resource.userInfo</h3>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id_user)
+
+        <div class="form-group">
+            @Html.Label(StaticResource.Resource.username, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.username, new { htmlAttributes = new { @class = "form-control" }, @readonly=true })
+                @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">9control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.pwd, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.pwd, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            @Html.Label(StaticResource.Resource.fullName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label(StaticResource.Resource.right, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.rightt, new List<SelectListItem>()
+                    {
+                        new SelectListItem(){ Selected = true, Text = StaticResource.Resource.manager, Value = "0" },
+                        new SelectListItem(){ Selected = false, Text = StaticResource.Resource.technician, Value = "1" },
+                        new SelectListItem(){ Selected = false, Text = StaticResource.Resource.nameStaff, Value = "2" },
+                    },
+                    new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" name="Edit" value="@StaticResource.Resource.saveChange" class="btn btn-primary" />
+                @*<input type="submit" name="Delete" value="Delete" class="btn btn-default" />
+                @Html.ActionLink("Change Password", "ChangeUserPassword", new { id = Model.id_user}, new { @class = "btn btn-default"})*@
+            </div>
+        </div>
+    </div>
+}
+<div>
+    <a class="icon" href="@Url.Action("Index", "Personal")">
+        <i class="fas fa-arrow-left"></i>
+        <span class="tooltiptext">Back</span>
+    </a>
+</div>

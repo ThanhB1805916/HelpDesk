@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Help Desk System</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://kit.fontawesome.com/c9fb60fce5.js" crossorigin="anonymous"></script>
+    @*<link href="~/Content/superhero.css" rel="stylesheet" type="text/css" />*@
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Help Desk", "Index", "Trouble", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("My Device", "Index", "Device")</li>
+                    <li>@Html.ActionLink("Trouble", "Index", "Trouble")</li>
+                    <li>@Html.ActionLink("FAQ", "Index", "FAQ")</li>
+                    <li>@Html.ActionLink("Logout", "Logout", "Authentication")</li>
+                    <li>@Html.ActionLink("Change password", "ChangeUserPassword", "Authentication", new { area = "" }, null)</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="list-group" style="width: 15%; height: 100%; overflow:auto; position: fixed; background-color: #f1f1f1">
+
+        <a class="btnc" href=@Url.Action("Insert", "Trouble")>
+            <div class="textc">Create</div>
+        </a>
+        <a class="list-group-item list-group-item-action icon" href=@Url.Action("Index", "Trouble")>
+            <i class="fas fa-file-alt"></i>
+            <span style="padding-left: 3px">My Trouble</span>
+        </a>
+        <a class="list-group-item list-group-item-action icon" href=@Url.Action("Index", "Device", new { Area = ""})>
+            <i class="fas fa-desktop"></i>
+            <span style="padding-left: 3px">My Device</span>
+        </a>
+        <a class="list-group-item list-group-item-action icon" href=@Url.Action("Index", "FAQ", new { Area = ""})>
+            <i class="fas fa-question-circle"></i>
+            <span style="padding-left: 3px">FAQ</span>
+        </a>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer class="card-footer text-muted">
+            <p>&copy; @DateTime.Now.Year Online Helpdesk System</p>
+        </footer>
+    </div>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+
+    <script src="~/Hubs/" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            // Proxy created on the fly
+            var cus = $.connection.HelpDeskHub;
+            // Declare a function on the job hub so the server can invoke it
+            cus.client.displayHelpDesk = function () {
+                getData();
+            };
+            // Start the connection
+            $.connection.hub.start();
+            getData();
+        });
+        function getData() {
+            var $tbl = $('#tblInfo');
+            $.ajax({
+                url: $("#Get").val(),
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+                    $tbl.empty();
+                    $.each(data.listCus, function (i, model) {
+                        $tbl.append
+                            (
+                                '<tr>' +
+                                '<td>' + model.Id + '</td>' +
+                                '<td>' + model.CusId + '</td>' +
+                                '<td>' + model.CusName + '</td>' +
+                                '<tr>'
+                            );
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Device";
+    Layout = "~/Views/Shared/_LayoutTrouble.cshtml";
+    var list_device = (List<Model.Device>)ViewBag.ListDevice;
+}
+
+<h2>@StaticResource.Resource.manageDevice</h2>
+<br />
+<div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">@StaticResource.Resource.id_device</th>
+                <th scope="col">@StaticResource.Resource.deviceName</th>
+                <th scope="col">@StaticResource.Resource.deviceCategory</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in list_device)
+            {
+                <tr id="row_@item.id_Device" onclick="window.location.href='History/@item.id_Device'">
+
+                    <td>@item.id_Device</td>
+                    <td>@item.nameDevice</td>
+                    <td>@ViewData["deviceCategory-" + item.id_Category.ToString()]</td>
+                    @*<td>
+                            <a class="icon" href="History/@item.id_Device">
+                                <i class="fas fa-history"></i>
+                                <span class="tooltiptext">History</span>
+                            </a>
+                        </td>*@
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

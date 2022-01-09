@@ -1,0 +1,90 @@
+﻿@model HelpDesk.Models.UserModel.FAQModelView
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = ViewBag.Layout;//"~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="form-horizontal">
+    <h2>@Model.question</h2>
+    <p><strong>@StaticResource.Resource.right</strong>: @ViewData["right"] | <strong>@StaticResource.Resource.count</strong>: @Model.countt</p>
+    <hr />
+    <strong style="font-size: large">@StaticResource.Resource.answer</strong>
+    <p class="col-md-offset-1">@Model.answer</p>
+    <hr />
+    <strong style="font-size: large">@StaticResource.Resource.troubleReference</strong>
+    <br />
+    <br />
+   
+</div>
+
+<div class="col-md-offset-1" padding: 5px">
+    <table class="table table-hover">
+        <tr>
+            <th>@StaticResource.Resource.id_trouble</th>
+            <th>@StaticResource.Resource.techDes</th>
+            <th>@StaticResource.Resource.dateFinish</th>
+            <th>@StaticResource.Resource.describe</th>
+        </tr>
+        @for (int i = 0; i < Model.finishTime.Count; i++)
+        {
+             <tr onclick="window.location.href='/Trouble/DetailFAQ/@Model.id_DetailTech[i]'">
+                 <td>
+                     @Model.id_Trouble[i]
+                 </td>
+                 <td>
+                     @ViewData["TechName_"+i]
+                 </td>
+                 <td>
+                     @Model.finishTime[i] Day
+                 </td>
+                 <td>
+                     @Model.describeFAQ[i]
+                 </td>
+             </tr> 
+        }
+    </table>
+</div>
+
+@*<div class="form-horizontal">
+    <hr />
+    <fieldset style="background-color: none; margin-bottom:20px">
+        <legend style="background-color: none; padding-left:10px; font-weight: bold">Detail FAQ</legend>
+
+        <div class="form-group">
+            @Html.Label("Question", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.id_FAQ)
+                @Html.TextBoxFor(model => model.question, new { htmlAttributes = new { @class = "form-control" }, @readonly = true })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Answer", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.id_FAQ)
+                @Html.TextBoxFor(model => model.answer, new { htmlAttributes = new { @class = "form-control" }, @readonly = true })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("View right", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.id_FAQ)
+                @Html.TextBox("Right", ViewData["right"], new { htmlAttributes = new { @class = "form-control" }, @readonly = true })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Count", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.id_FAQ)
+                @Html.TextBoxFor(model => model.countt, new { htmlAttributes = new { @class = "form-control" }, @readonly = true })
+            </div>
+        </div>
+    </fieldset>
+</div>*@
+<div>
+    <a class="icon" href=@Url.Action("Index", "FAQ", new { Area = ViewBag.View})>
+        <i class="fas fa-arrow-left"></i>
+        <span class="tooltiptext">Back</span>
+    </a>
+</div>

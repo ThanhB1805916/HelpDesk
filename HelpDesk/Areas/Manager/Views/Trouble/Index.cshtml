@@ -1,0 +1,205 @@
+﻿@model IPagedList<Model.Trouble>
+@using PagedList.Mvc;
+@using PagedList;
+
+
+@{
+    ViewBag.Title = "Trouble Report";
+    Layout = "~/Areas/Manager/Views/Shared/_LayoutTrouble.cshtml";
+}
+
+
+<h2>@StaticResource.Resource.troubleManagerPage</h2>
+<br />
+
+<!------------------New----------------->
+
+
+@*<div class="col-md-10">
+    @StaticResource.Resource.dateStart <input id="dateStart" name="dateStart" type="date" value="@ViewBag.dateStart" />
+
+    @StaticResource.Resource.dateEnd <input id="dateEnd" name="dateEnd" type="date" value="@ViewBag.dateEnd" />
+
+    @StaticResource.Resource.level
+    @Html.DropDownList("level", new List<SelectListItem>()
+                   {
+                       new SelectListItem(){ Selected = (bool)ViewData["selected-"], Text = @StaticResource.Resource.all, Value = ""},
+                       new SelectListItem(){ Selected = (bool)ViewData["selected--1"],Text = @StaticResource.Resource.levelNo, Value = "-1" },
+                       new SelectListItem(){ Selected = (bool)ViewData["selected-0"],Text = @StaticResource.Resource.levelLess, Value = "0" },
+                       new SelectListItem(){ Selected = (bool)ViewData["selected-1"],Text = @StaticResource.Resource.levelSerious, Value = "1" },
+                       new SelectListItem(){ Selected = (bool)ViewData["selected-2"],Text = @StaticResource.Resource.levelVery, Value = "2" }
+                   },
+                   new { htmlAttributes = new { @class = "form-control" } })
+    <button class="btn btn-info" onclick="search()">@StaticResource.Resource.search</button>
+    <span class="col-md-6 alert-danger" id="notify"></span>
+</div>*@
+<div class="row row-cols-md-1">
+    <span style="padding-left: 7px">
+        @StaticResource.Resource.dateStart
+        <input id="dateStart" name="dateStart" type="date" value="@ViewBag.dateStart" />
+    </span>
+    <span style="padding-left: 7px">
+        @StaticResource.Resource.dateEnd
+        <input id="dateEnd" name="dateEnd" type="date" value="@ViewBag.dateEnd" />
+    </span>
+    <span style="padding-left: 7px">
+        @StaticResource.Resource.level
+        @Html.DropDownList("level", new List<SelectListItem>()
+   {
+       //new SelectListItem(){ Selected = (bool)ViewData["selected-"], Text = "All", Value = ""},
+       //new SelectListItem(){ Selected = (bool)ViewData["selected--1"],Text = "No define", Value = "-1" },
+       //new SelectListItem(){ Selected = (bool)ViewData["selected-0"],Text = "Less Serious", Value = "0" },
+       //new SelectListItem(){ Selected = (bool)ViewData["selected-1"],Text = "Serious", Value = "1" },
+       //new SelectListItem(){ Selected = (bool)ViewData["selected-2"],Text = "Very Serious", Value = "2" }
+
+        new SelectListItem(){ Selected = (bool)ViewData["selected-"], Text = StaticResource.Resource.all, Value = ""},
+       new SelectListItem(){ Selected = (bool)ViewData["selected--1"],Text = StaticResource.Resource.levelNo, Value = "-1" },
+       new SelectListItem(){ Selected = (bool)ViewData["selected-0"],Text = StaticResource.Resource.levelLess, Value = "0" },
+       new SelectListItem(){ Selected = (bool)ViewData["selected-1"],Text = StaticResource.Resource.levelSerious, Value = "1" },
+       new SelectListItem(){ Selected = (bool)ViewData["selected-2"],Text = StaticResource.Resource.levelVery, Value = "2" }
+   },
+   new { htmlAttributes = new { @class = "form-control" } })
+    </span>
+    <span style="padding-left: 7px">
+
+        <button type="button" class="btn btn-info" onclick="search()">
+            <i class="fas fa-search"></i>
+            @StaticResource.Resource.search
+        </button>
+    </span>
+    @*<span class="col-md-6 alert-danger" id="notify"></span>*@
+</div>
+
+<br />
+<br />
+<h4 style="clear: left">@StaticResource.Resource.sort</h4>
+<p>
+    @Html.ActionLink(StaticResource.Resource.id, "Index", new { sortOrder = ViewBag.ID_SortParm, currentFilter = ViewBag.CurrentFilter })|
+    @Html.ActionLink(StaticResource.Resource.level, "Index", new { sortOrder = ViewBag.Level_SortParm, currentFilter = ViewBag.CurrentFilter })|
+    @Html.ActionLink(StaticResource.Resource.dateStaff, "Index", new { sortOrder = ViewBag.ReportDate_SortParm, currentFilter = ViewBag.CurrentFilter })
+</p>
+
+<!------------------New----------------->
+<div class="table">
+    <table class="table table-hover" id="tableTrouble">
+        <thead>
+            <tr>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.First().id_Trouble)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.First().id_Report)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.First().id_Fill)
+                </th>
+
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.First().id_Manage)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.First().id_Device)
+                </th>
+
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.First().status)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.First().level)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.First().dateStaff)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.First().dateManage)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.First().dateTech)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr onclick="window.location.href = '/Manager/Trouble/Share/@item.id_Trouble'" class=@ViewData[item.id_Trouble.ToString()]>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.id_Trouble)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.id_Report)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.id_Fill)
+                    </td>
+
+                    <td>
+                        @if (item.id_Manage == -1)
+                        {
+                            @Html.Display("None")
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.id_Manage)
+                        }
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.id_Device)
+                    </td>
+
+                    <td>
+                        <i class="@ViewData["status-icon-" + item.status]"></i>
+                        <span style="padding-left: 5px">@ViewData["status-" + item.status.ToString()] @ViewData["stage" + item.id_Trouble]</span>
+                    </td>
+
+                    <td>
+                        @ViewData["level-" + (item.level).ToString()]
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dateStaff)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dateManage)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dateTech)
+                    </td>
+
+                </tr>
+
+
+            }
+        </tbody>
+    </table>
+</div>
+    @Html.PagedListPager(Model, index => Url.Action("Index", "Trouble", new { index, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+    @section scripts{
+        <script>
+            function search() {
+                var dateStart = $('#dateStart')
+                var dateEnd = $('#dateEnd')
+                var level = $('#level')
+                var notify = $('#notify')
+                if (dateStart.val() == "" && dateEnd.val() != "") {
+                    notify.text('Date start not null')
+                    return
+                }
+
+                if (dateStart.val() != "" && dateEnd.val() == "") {
+                    notify.text('Date end not null')
+                    return
+                }
+
+                if (dateStart.val() > dateEnd.val() && dateEnd.val() != "") {
+                    notify.text('Date start must less than Date end')
+                    return
+                }
+
+
+                var search = dateStart.val() + '_' + dateEnd.val() + '_' + level.val()
+                console.log(search)
+                window.location.href = '/Manager/Trouble?search=' + search
+            }
+        </script>
+    }

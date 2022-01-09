@@ -1,0 +1,42 @@
+﻿@model Model.FAQ
+
+@{
+    ViewBag.Title = "Chi tiết";
+    Layout = "~/Areas/Tech/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết</h2>
+
+<div>
+    <h4>FAQ</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.question)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.question)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.answer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.answer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.rightt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.rightt)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Trở về danh sách", "Index")
+</p>

@@ -1,0 +1,73 @@
+﻿@model IPagedList<Model.User>
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "User list";
+    Layout = "~/Areas/Manager/Views/Shared/_LayoutTrouble.cshtml";
+}
+
+<h2>@StaticResource.Resource.userManager</h2>
+<br />
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">
+                @StaticResource.Resource.id
+            </th>
+            <th scope="col">
+                @StaticResource.Resource.username
+            </th>
+
+            <th scope="col">
+                @StaticResource.Resource.fullName
+            </th>
+
+            <th scope="col">
+                @StaticResource.Resource.right
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr id="row_@item.id_user">
+                <td onclick="window.location.href='/Manager/Personal/Details/@item.id_user'">
+                    @Html.DisplayFor(modelItem => item.id_user)
+                </td>
+                <td onclick="window.location.href='/Manager/Personal/Details/@item.id_user'">
+                    @Html.DisplayFor(modelItem => item.username)
+                </td>
+
+                <td onclick="window.location.href='/Manager/Personal/Details/@item.id_user'">
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @*@ViewData["right-" + item.rightt]*@
+                    <i class="@ViewData["icon-role-" + item.rightt]"></i>
+                    <span style="padding-left: 5px">@ViewData["right-" + item.rightt]</span>
+                </td>
+                <td>
+                    @Ajax.ActionLink(" ", "Delete", new { id = item.id_user }, new AjaxOptions
+                                                   {
+                                                       Confirm = "Do you want to delete " + item.name + "?",
+                                                       OnComplete = "$('#row_" + item.id_user + "').remove()",
+                                                       HttpMethod = "Delete"
+                                                   }, new { @class = "icon glyphicon glyphicon-trash" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a class="icon" href=@Url.Action("Create", "Personal")>
+        <i class="fas fa-plus-square"></i>
+        <span class="tooltiptext">@StaticResource.Resource.addUser</span>
+    </a>
+</div>
+@Html.PagedListPager(Model, index => Url.Action("Index", "Personal", new { index }))
+
+

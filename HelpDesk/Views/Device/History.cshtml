@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "History";
+    Layout = "~/Views/Shared/_LayoutTrouble.cshtml";
+    var history = (List<Model.ViewModel.HistoryDeviceViewModel>)ViewBag.ListHistory;
+    var id = ViewBag.DeviceID;
+    var name = ViewBag.DeviceName;
+}
+
+
+<h2>@StaticResource.Resource.deviceName: @name</h2>
+<br />
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">@StaticResource.Resource.id_trouble</th>
+            <th scope="col">@StaticResource.Resource.id_report</th>
+            <th scope="col">@StaticResource.Resource.id_fill</th>
+            <th scope="col">@StaticResource.Resource.id_manage</th>
+            <th scope="col">@StaticResource.Resource.dateStaff</th>
+            <th scope="col">@StaticResource.Resource.status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in history)
+        {
+            <tr id="row_@item.TroubleID" onclick="window.location.href='@Url.Action("DetailHis", "Trouble", new { @id = item.TroubleID})'">
+
+                @{
+                    var strstatus = "";
+                    var status = item.Status;
+                    if (status == 0)
+                    {
+                        strstatus = StaticResource.Resource.statusSend;
+                    }
+                    else if (status == 1)
+                    {
+                        strstatus = StaticResource.Resource.statusRecevied;
+                    }
+                    else if (status == 2)
+                    {
+                        strstatus = StaticResource.Resource.statusTroubleshooting;
+                    }
+                    else if (status == 3)
+                    {
+                        strstatus = StaticResource.Resource.statusFinish;
+                    }
+                }
+                <td>@item.TroubleID</td>
+                <td>@item.ReportID</td>
+                <td>@item.FillID</td>
+                <th>@item.ManagerID</th>
+                <td>@item.DateStaff</td>
+                <td>@strstatus</td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+<br />
+
+<div>
+    <a class="icon" href="@Url.Action("Index", "Device")">
+        <i class="fas fa-arrow-left"></i>
+        <span class="tooltiptext">Back</span>
+    </a>
+</div>
+
+
+

@@ -1,0 +1,68 @@
+﻿@model Model.User
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Manager/Views/Shared/_LayoutPersonal.cshtml";
+}
+
+<h2>Details</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>User Information</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.id_user)
+
+    <div class="form-group">
+        @Html.Label("Username", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+        </div>
+    </div> 
+
+    @*<div class="form-group">9control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.pwd, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.pwd, "", new { @class = "text-danger" })
+        </div>
+    </div>*@
+
+    <div class="form-group">
+        @Html.Label("Name", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.rightt, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.rightt, new List<SelectListItem>()
+                {
+                    new SelectListItem(){ Selected = true, Text = "Manager", Value = "0" },
+                    new SelectListItem(){ Selected = false, Text = "Technician", Value = "1" },
+                    new SelectListItem(){ Selected = false, Text = "Staff", Value = "2" },
+                },
+                new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" name="Edit" value="Save Change" class="btn btn-primary" />
+            @*<input type="submit" name="Delete" value="Delete" class="btn btn-default" />
+            <input type="submit" name="ChangePassword" value="Change Password" class="btn btn-default" />*@
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to list", "Index")
+</div>

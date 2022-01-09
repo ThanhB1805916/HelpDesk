@@ -1,0 +1,62 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Help Desk System</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://kit.fontawesome.com/c9fb60fce5.js" crossorigin="anonymous"></script>
+    @*<link href="~/Content/superhero.css" rel="stylesheet" type="text/css" />*@
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+</head>
+<body style="background: #c8d6e5">
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Help Desk", "Index", "Trouble", new { area = "Manager" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Trouble", "Index", "Trouble", new { area = "Manager" }, null)</li>
+                    <li>@Html.ActionLink("Personnel", "Index", "Personal", new { area = "Manager" }, null)</li>
+                    <li>@Html.ActionLink("FAQ", "Index", "FAQ", new { area = "Manager" }, null)</li>
+                    <li>@Html.ActionLink("ChangePassword", "ChangeUserPassword", "Authentication", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Logout", "Logout", "Authentication", new { area = "" }, null)</li>
+
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="list-group" style="width: 15%; height: 100%; overflow:auto; position: fixed; background-color: dimgrey">
+
+        @Html.ActionLink("Manage Personnel", "Index", "Personnel", new { @class = "list-group-item list-group-item-action" })
+        @Html.ActionLink("Add Personnel", "Create", "Personnel", new { @class = "list-group-item list-group-item-action" })
+
+    </div>
+
+
+    <div class="container body-content" style="margin-left: 17%">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year Help Desk System</p>
+        </footer>
+    </div>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

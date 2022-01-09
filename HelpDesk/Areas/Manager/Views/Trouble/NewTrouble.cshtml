@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "NewTrouble";
+    Layout = "~/Areas/Manager/Views/Shared/_LayoutTrouble.cshtml";
+}
+
+<h2>Trouble Report</h2>
+
+@Html.Hidden("Get", Url.Action("Get", "Trouble"))
+
+<h3>New Trouble Report</h3>
+<div id="tableNew">
+    <p id="notify" style="text-align:center; background-color:aqua"></p>
+    <table class="table" id="headTable">
+        <tr>
+            <th>
+                Trouble ID
+            </th>
+            <th>
+                Report ID
+            </th>
+            <th>
+                Fill ID
+            </th>
+
+            <th>
+                Manager ID
+            </th>
+            <th>
+                Device ID
+            </th>
+
+            <th>
+                Status
+            </th>
+            <th>
+                Level
+            </th>
+            <th>
+                Report Date
+            </th>
+            <th>
+                Expected Date
+            </th>
+            <th>
+                Finish Date
+            </th>
+            <th></th>
+        </tr>
+
+        <tbody id="tableTrouble"></tbody>
+
+    </table>
+</div>
+
+@section scripts{
+
+    <script src="~/Scripts/NewTrouble.js"></script>
+}

@@ -1,0 +1,40 @@
+.btnc {
+    height: 56px;
+    width: 97%;
+    border-radius: 50%;
+    background-color: white;
+    color: #3c4043;
+    border-radius: 90px;
+    display: inline-flex;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302), 0 1px 3px 1px rgba(60, 64, 67, 0.149);
+}
+
+    .btnc .textc {
+        margin-left: 14px;
+        /*font-family: Verdana, serif;*/
+        font-size: 18px;
+        font-weight: bold;
+        line-height: 55px;
+        /*display: none;*/
+    }
+
+.btnc::before {
+    background-image: url(../Assets/icon/create_32dp.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 32px;
+    content: "";
+    min-width: 56px;
+    display: block;
+}
+
+    .btnc:hover {
+        background-position: 10px;
+        background-color: /*#ecf0f1*/ #f2f2f2;
+        border-radius: 90px;
+        text-decoration: none;
+    }
+
+.btnc:hover .textc {
+    display: block;
+}

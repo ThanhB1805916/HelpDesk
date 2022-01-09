@@ -1,0 +1,88 @@
+﻿@*@model IPagedList<Model.Trouble_Statistic>
+    @using PagedList.Mvc;
+    @using PagedList;*@
+
+@model HelpDesk.Areas.Manager.Models.Troubles_Statistic
+
+@{
+    ViewBag.Title = "Trouble Report";
+    Layout = "~/Areas/Manager/Views/Shared/_LayoutTrouble.cshtml";
+}
+
+
+<h2>Trouble Report</h2>
+
+
+<h3>All Trouble Report</h3>
+
+<!------------------New----------------->
+
+@using (Html.BeginForm())
+{
+
+    <div class="col-md-10">
+        Find Troubles:
+        Date:  @Html.TextBox("searchString_Date")
+
+        Month: @Html.TextBox("searchString_Month")
+
+        Year: @Html.TextBox("searchString_Year")
+
+        <input type="submit" value="Search" />
+        <br />
+        (Current Filter: @ViewBag.CurrentFilter)
+    </div>
+
+}
+
+<br />
+<br />
+<h4>Sort by</h4>
+<p>
+    @Html.ActionLink("Level", "Index", new { sortOrder = ViewBag.Level_SortParm, currentFilter = ViewBag.CurrentFilter })|
+    @Html.ActionLink("Report Date", "Index", new { sortOrder = ViewBag.ReportDate_SortParm, currentFilter = ViewBag.CurrentFilter })
+</p>
+
+<!------------------New----------------->
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.LabelFor(model => model.Troubles_Card)
+        </th>
+
+        <th>
+            @Html.DisplayName("Status")
+        </th>
+    </tr>
+    <tr>
+        <th>
+            @Html.DisplayFor(model => model.Troubles_Card)
+        </th>
+        <th>
+            @Html.LabelFor(model => model.Troubles_Sent)
+            @Html.DisplayFor(model => model.Troubles_Sent)
+            <br />
+
+            @Html.LabelFor(model => model.Troubles_Received)
+            @Html.DisplayFor(model => model.Troubles_Received)
+            <br />
+
+            @Html.LabelFor(model => model.Troubles_Processing)
+            @Html.DisplayFor(model => model.Troubles_Processing)
+            <br />
+
+            @Html.LabelFor(model => model.Troubles_Finished)
+            @Html.DisplayFor(model => model.Troubles_Finished)
+        </th>
+    </tr>
+</table>
+
+
+
+
+@*@Html.PagedListPager(Model, index => Url.Action("Index", "Trouble", new { index, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@
+@section scripts{
+
+    <script src="~/Scripts/SignalR.js"></script>
+}
